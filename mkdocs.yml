@@ -1,0 +1,109 @@
+site_name: Workflow Engine
+site_description: >-
+  Workflow Engine Example
+site_author: Javier Santos
+repo_name: jsa4000/Workflow-Engine-Example
+repo_url: https://github.com/jsa4000/Workflow-Engine-Example.git
+site_url: https://jsa4000.github.io/Workflow-Engine-Example/
+
+theme:
+  name: material
+  font:
+    text: Merriweather Sans
+    code: Red Hat Mono
+  icon:
+    logo: material/book-open-page-variant
+  features:
+    - header.autohide
+    - navigation.footer
+    - navigation.instant
+    - navigation.instant.progress
+    - navigation.instant.preview
+    - navigation.tabs
+    #- navigation.tabs.sticky
+    - navigation.tracking
+    - navigation.top
+    #- navigation.sections
+    - navigation.instant
+    - navigation.tracking
+    - toc.integrate
+    - search.suggest
+    - search.share
+    - search.highlight
+    - content.tabs.link
+    - content.code.annotation
+    - content.code.annotate
+    - content.code.copy
+  palette:
+    - scheme: slate
+      toggle:
+        icon: material/weather-sunny
+        name: Dark mode
+      primary: green
+      accent: deep purple
+    - scheme: default
+      toggle:
+        icon: material/weather-night
+        name: Light mode
+      primary: blue
+      accent: deep orange
+
+markdown_extensions:
+  - abbr
+  - meta
+  - md_in_html
+  - attr_list
+  - admonition
+  - footnotes
+  - pymdownx.emoji:
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
+  - pymdownx.highlight:
+      anchor_linenums: true
+      line_spans: __span
+      pygments_lang_class: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets:
+      check_paths: true
+      base_path:
+        - .
+        - docs
+        - src
+      url_download: true
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+  - pymdownx.tabbed:
+      alternate_style: true
+      combine_header_slug: true
+      slugify: !!python/object/apply:pymdownx.slugs.slugify
+        kwds:
+          case: lower
+  - pymdownx.arithmatex:
+      generic: true
+  - pymdownx.mark
+  - pymdownx.details
+  - pymdownx.critic
+  - pymdownx.caret
+  - pymdownx.keys
+  - pymdownx.tilde
+
+plugins:
+  - search
+  - minify:
+      minify_html: true
+  - git-revision-date-localized
+  - autolinks
+  - diagrams
+  - glightbox
+  - tags
+  - awesome-pages
+
+extra:
+  social:
+    - icon: simple/github
+      link: https://github.com/jsa4000
+
+copyright: Copyright &copy; 2024 Javier Santos
