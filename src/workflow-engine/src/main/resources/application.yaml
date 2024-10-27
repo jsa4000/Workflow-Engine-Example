@@ -1,0 +1,12 @@
+spring:
+  application:
+    name: workflow-engine
+  datasource:
+    url: jdbc:h2:mem:db
+    username: sa
+    password: password
+    driverClassName: org.h2.Driver
+
+camunda.bpm.admin-user:
+  id: admin
+  password: password

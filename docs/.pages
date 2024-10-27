@@ -1,5 +1,6 @@
 nav:
   - index.md
+  - getting-started
 
 order_by: title
 order: asc
