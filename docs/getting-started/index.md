@@ -20,7 +20,7 @@ In order to create a camunda project, there are **multiple** options to choose f
 
 !!! note
 
-  The **recommendation** is to use **spring initializer** as a base for the project and start adding **Camunda** dependencies on top.
+    The **recommendation** is to use **spring initializer** as a base for the project and start adding **Camunda** dependencies on top.
 
 #### Camunda Initializer
 
@@ -44,7 +44,7 @@ You can download the [Open Source Desktop Modeler](https://github.com/camunda/ca
 
 !!! warning
 
-  You would need to select the proper version from Camunda to start designing the BPMN or DMN models. The current version used in this case is `7.22`.
+    You would need to select the proper version from Camunda to start designing the BPMN or DMN models. The current version used in this case is `7.22`.
 
 ![workflow-engine](../assets/getting-started-camunda-modeler-version.png)
 
