@@ -9,13 +9,13 @@
       <bpmn:incoming>SequenceFlow_16gzt2m</bpmn:incoming>
     </bpmn:endEvent>
     <bpmn:sequenceFlow id="SequenceFlow_16gzt2m" sourceRef="show-message" targetRef="EndEvent_0x6ir2l" />
-    <bpmn:scriptTask id="show-message" name="Show Message" scriptFormat="javascript">
+    <bpmn:scriptTask id="show-message" name="Show Message" scriptFormat="groovy">
       <bpmn:documentation>Show Messages using JavaScript
 
 https://docs.camunda.org/manual/7.22/user-guide/process-engine/scripting/</bpmn:documentation>
       <bpmn:incoming>SequenceFlow_1fp17al</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_16gzt2m</bpmn:outgoing>
-      <bpmn:script>print('Hello Message')</bpmn:script>
+      <bpmn:script>println execution.activityId + " " + execution.eventName + "ed"</bpmn:script>
     </bpmn:scriptTask>
   </bpmn:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
