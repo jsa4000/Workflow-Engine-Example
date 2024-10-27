@@ -7,6 +7,32 @@ spring:
     password: password
     driverClassName: org.h2.Driver
 
-camunda.bpm.admin-user:
-  id: admin
-  password: password
+# https://docs.camunda.org/manual/latest/user-guide/spring-boot-integration/configuration
+camunda:
+  bpm:
+    filter:
+      # Create a default filter to see all tasks in task list
+      create: All tasks
+    # https://docs.camunda.org/manual/latest/user-guide/spring-boot-integration/configuration/#generic-properties
+    generic-properties:
+      properties:
+        # Each execution of a model resource (BPMN, DMN, and CMMN) generates historic data during execution
+        # that is stored in the database. In Camunda 7, history cleanup removes this historic data from the
+        # database based on a defined history time to live (HTTL).
+        # https://docs.camunda.io/docs/components/modeler/reference/modeling-guidance/rules/history-time-to-live/
+        historyTimeToLive: P30D
+        # Expression evaluation is enabled for any query. Use this setting if all users are trusted.
+        enableExpressionsInAdhocQueries: true
+        enableExpressionsInStoredQueries: true
+        # Set Process order policy for Job Execution
+        jobExecutorAcquireByDueDate: true
+        # jobExecutorAcquireByPriority: true
+    job-execution:
+      core-pool-size: 3
+      max-pool-size: 10
+      queue-capacity: 3
+      max-jobs-per-acquisition: 3
+    admin-user:
+      id: admin
+      password: password
+

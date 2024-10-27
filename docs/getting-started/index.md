@@ -60,7 +60,60 @@ Enable following **auto-save** options within **IntelliJ**, to enable auto-forma
 
 ### Camunda WebApps
 
-Run the applications and go to **Camunda WebApps** at [http://localhost:8080](http://localhost:8080)
+Run the application and go to **Camunda WebApps** at [http://localhost:8080](http://localhost:8080)
 
 ![workflow-engine](../assets/getting-started-camunda-webapps.png)
+
+For specific webapp use following links:
+
+* [Cockpit Dashboard](http://localhost:8080/camunda/app/cockpit/default/#/dashboard)
+* [TaskList Dashboard](http://localhost:8080/camunda/app/tasklist/default/)
+
+#### Tasklist
+
+To manually start a process go to [TaskList Dashboard](http://localhost:8080/camunda/app/tasklist/default/).
+
+Click to **Start process** button on the top-right corner of the screen.
+
+![workflow-engine](../assets/getting-started-tasklist-start-process.png)
+
+**Select** the workflow (`Process Simple`) to be started among the deployed ones.
+
+![workflow-engine](../assets/getting-started-tasklist-select-process.png)
+
+Set a **Business Key** to identify the process and finally click **Start**.
+
+![workflow-engine](../assets/getting-started-tasklist-start-process-start.png)
+
+*This will start a **process instance**. Since it's a simple process with an *User Task*, this will be listed in the tasklist, so press `F12` or reload the page to **refresh** the current webpage. You **cannot complete** it until the task will be **assigned** to an user or **claimed**.
+
+![workflow-engine](../assets/getting-started-tasklist-process-task.png)
+
+Once you (claim) or somebody else have been assigned to the task, it can be **completed**.
+
+![workflow-engine](../assets/getting-started-tasklist-process-claim.png)
+
+#### Cockpit
+
+**Cockpit** gives you a *real-time* view of BPMN processes and DMN decision tables as they run, so you can monitor their status and quickly identify technical incidents that slow down or stop workflows.
+
+!!! note
+
+    Cockpit will **only** show the **current** process instances being running, for the historical processes you must **upgrade** to the Enterprise Camunda version.
+
+From the previous example, the process is still running and the *User Task* is still pending to be completed. You can visualize this information within the cockpit.
+
+![workflow-engine](../assets/getting-started-cockpit-start-process.png)
+
+In the **Running Process Instances** options, you can see the definition version, definition key and name, history time to live (HTTL), process instances (Current Step, start time, Business Key), incidents, job definitions.
+
+![workflow-engine](../assets/getting-started-cockpit-process-instances.png)
+
+In process instances you can take a look closer to the process running, variables, user tasks, etc..
+
+![workflow-engine](../assets/getting-started-cockpit-process-instance.png)
+
+In the **Open Human Tasks** options, you can visualize a resume for all **assignments** by type and group for all processes.
+
+![workflow-engine](../assets/getting-started-cockpit-human-tasks.png)
 
