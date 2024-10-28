@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="https://www.omg.org/spec/DMN/20191111/MODEL/" xmlns:dmndi="https://www.omg.org/spec/DMN/20191111/DMNDI/" xmlns:dc="http://www.omg.org/spec/DMN/20180521/DC/" xmlns:modeler="http://camunda.org/schema/modeler/1.0" xmlns:camunda="http://camunda.org/schema/1.0/dmn" id="process-dmn" name="DRD" namespace="http://camunda.org/schema/1.0/dmn" exporter="Camunda Modeler" exporterVersion="5.28.0" modeler:executionPlatform="Camunda Platform" modeler:executionPlatformVersion="7.22.0">
+  <decision id="price" name="Price">
+    <decisionTable id="DecisionTable_0f99zv0" hitPolicy="FIRST">
+      <input id="Input_1" label="Name" camunda:inputVariable="name">
+        <inputExpression id="InputExpression_1" typeRef="string">
+          <text>contains(string, match)</text>
+        </inputExpression>
+      </input>
+      <input id="InputClause_1grp8lp" label="Price" camunda:inputVariable="price">
+        <inputExpression id="LiteralExpression_15lr8b1" typeRef="string">
+          <text></text>
+        </inputExpression>
+      </input>
+      <output id="Output_1" name="result" typeRef="boolean" />
+      <output id="OutputClause_17egzf5" name="priority" typeRef="string">
+        <outputValues id="UnaryTests_1ms4f16">
+          <text>"HIGH","MID","LOW"</text>
+        </outputValues>
+      </output>
+      <rule id="DecisionRule_0s4fpi0">
+        <inputEntry id="UnaryTests_1gx2mac">
+          <text>Javier</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1nxhknb">
+          <text>&gt; 20</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1njk5cj">
+          <text>true</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_0pcxyna">
+          <text>"HIGH"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_1ehur94">
+        <inputEntry id="UnaryTests_1wc7p3i">
+          <text>Javier</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_15eyriz">
+          <text>&lt;= 20</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_12h0bov">
+          <text>false</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_0oj2d2m">
+          <text>"MID"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_05dul3m">
+        <inputEntry id="UnaryTests_05deg3w">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_08gbn5v">
+          <text></text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0ra5szw">
+          <text></text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_16oec1i">
+          <text></text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <dmndi:DMNDI>
+    <dmndi:DMNDiagram>
+      <dmndi:DMNShape dmnElementRef="price">
+        <dc:Bounds height="80" width="180" x="160" y="100" />
+      </dmndi:DMNShape>
+    </dmndi:DMNDiagram>
+  </dmndi:DMNDI>
+</definitions>
