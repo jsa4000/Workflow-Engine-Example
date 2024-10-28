@@ -15,6 +15,7 @@ camunda:
       # Create a default filter to see all tasks in task list
       create: All tasks
     authorization:
+      # Block users from other groups from claiming the task not assigned to it.
       enabled: true
     # https://docs.camunda.org/manual/latest/user-guide/spring-boot-integration/configuration/#generic-properties
     generic-properties:

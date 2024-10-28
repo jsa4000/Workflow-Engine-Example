@@ -1,0 +1,33 @@
+spring:
+  application:
+    name: task-service
+
+server:
+  port: 8081
+
+camunda:
+  web:
+    url: http://localhost:8080/engine-rest
+
+info:
+  application:
+    name: '@project.name@'
+    description: '@project.description@'
+    version: '@project.version@'
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+
+springdoc:
+  pathsToMatch: /api/**
+  packagesToScan: com.example
+  swagger-ui:
+    enabled: true
+    path: /index.html
+  api-docs:
+    enabled: true
+    path: /v3/api-docs
+
