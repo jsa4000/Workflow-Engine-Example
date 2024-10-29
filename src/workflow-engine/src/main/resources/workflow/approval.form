@@ -1,0 +1,23 @@
+{
+  "components": [
+    {
+      "label": "Approve",
+      "type": "checkbox",
+      "layout": {
+        "row": "Row_0a5rbmx",
+        "columns": null
+      },
+      "id": "Field_1eatpg7",
+      "key": "approved"
+    }
+  ],
+  "type": "default",
+  "id": "approval",
+  "exporter": {
+    "name": "Camunda Modeler",
+    "version": "5.28.0"
+  },
+  "executionPlatform": "Camunda Platform",
+  "executionPlatformVersion": "7.22.0",
+  "schemaVersion": 16
+}
