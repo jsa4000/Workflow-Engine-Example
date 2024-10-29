@@ -8,7 +8,8 @@
         "columns": null
       },
       "id": "Field_030imoe",
-      "key": "name"
+      "key": "name",
+      "defaultValue": "MyName"
     },
     {
       "label": "Surname",
@@ -18,21 +19,50 @@
         "columns": null
       },
       "id": "Field_1lk563m",
-      "key": "surname"
+      "key": "surname",
+      "defaultValue": "MySurname"
     },
     {
-      "label": "Price",
+      "label": "Age",
       "type": "number",
       "layout": {
         "row": "Row_0ea382y",
         "columns": null
       },
       "id": "Field_1ct445f",
-      "key": "price"
+      "key": "age",
+      "defaultValue": 24,
+      "decimalDigits": 0,
+      "increment": "1"
+    },
+    {
+      "values": [
+        {
+          "label": "CAR",
+          "value": "CAR"
+        },
+        {
+          "label": "HOUSE",
+          "value": "HOUSE"
+        },
+        {
+          "label": "LIFE",
+          "value": "LIFE"
+        }
+      ],
+      "label": "Type",
+      "type": "select",
+      "layout": {
+        "row": "Row_0vn8pvz",
+        "columns": null
+      },
+      "id": "Field_1srxeyx",
+      "key": "type",
+      "defaultValue": "CAR"
     }
   ],
   "type": "default",
-  "id": "purchase-product",
+  "id": "purchase-policy",
   "exporter": {
     "name": "Camunda Modeler",
     "version": "5.28.0"
