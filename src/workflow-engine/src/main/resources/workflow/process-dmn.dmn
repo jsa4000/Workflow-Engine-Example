@@ -2,10 +2,13 @@
 <definitions xmlns="https://www.omg.org/spec/DMN/20191111/MODEL/" xmlns:dmndi="https://www.omg.org/spec/DMN/20191111/DMNDI/" xmlns:dc="http://www.omg.org/spec/DMN/20180521/DC/" xmlns:modeler="http://camunda.org/schema/modeler/1.0" xmlns:camunda="http://camunda.org/schema/1.0/dmn" xmlns:biodi="http://bpmn.io/schema/dmn/biodi/2.0" id="process-dmn" name="DRD" namespace="http://camunda.org/schema/1.0/dmn" exporter="Camunda Modeler" exporterVersion="5.28.0" modeler:executionPlatform="Camunda Platform" modeler:executionPlatformVersion="7.22.0">
   <decision id="risk" name="Risk">
     <decisionTable id="DecisionTable_0f99zv0" hitPolicy="FIRST">
-      <input id="Input_1" label="Type" biodi:width="192" camunda:inputVariable="type">
+      <input id="Input_1" label="Policy Type" biodi:width="192" camunda:inputVariable="type">
         <inputExpression id="InputExpression_1" typeRef="string">
-          <text>contains(string, match)</text>
+          <text></text>
         </inputExpression>
+        <inputValues id="UnaryTests_02oojs0">
+          <text>"CAR","HOUSE","LIFE"</text>
+        </inputValues>
       </input>
       <input id="InputClause_1grp8lp" label="Age" camunda:inputVariable="age">
         <inputExpression id="LiteralExpression_15lr8b1" typeRef="integer">
@@ -20,7 +23,7 @@
       </output>
       <rule id="DecisionRule_0s4fpi0">
         <inputEntry id="UnaryTests_1gx2mac">
-          <text>CAR</text>
+          <text>"CAR"</text>
         </inputEntry>
         <inputEntry id="UnaryTests_1nxhknb">
           <text>&lt; 20</text>
@@ -34,7 +37,7 @@
       </rule>
       <rule id="DecisionRule_1ehur94">
         <inputEntry id="UnaryTests_1wc7p3i">
-          <text>CAR</text>
+          <text>"CAR"</text>
         </inputEntry>
         <inputEntry id="UnaryTests_15eyriz">
           <text>[20..60]</text>
@@ -48,7 +51,7 @@
       </rule>
       <rule id="DecisionRule_05dul3m">
         <inputEntry id="UnaryTests_05deg3w">
-          <text>CAR</text>
+          <text>"CAR"</text>
         </inputEntry>
         <inputEntry id="UnaryTests_08gbn5v">
           <text>&gt; 60</text>
@@ -62,10 +65,10 @@
       </rule>
       <rule id="DecisionRule_1ufal99">
         <inputEntry id="UnaryTests_0hc015g">
-          <text></text>
+          <text>"LIFE"</text>
         </inputEntry>
         <inputEntry id="UnaryTests_153zejd">
-          <text>&lt; 30 </text>
+          <text>&lt; 30</text>
         </inputEntry>
         <outputEntry id="LiteralExpression_0sgmi8s">
           <text>true</text>
@@ -76,7 +79,7 @@
       </rule>
       <rule id="DecisionRule_1965wi5">
         <inputEntry id="UnaryTests_1aj6hcq">
-          <text></text>
+          <text>"LIFE"</text>
         </inputEntry>
         <inputEntry id="UnaryTests_0t0vx7m">
           <text>&gt;= 30</text>
@@ -86,6 +89,48 @@
         </outputEntry>
         <outputEntry id="LiteralExpression_1p7qp14">
           <text>"LOW"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0btu9c8">
+        <inputEntry id="UnaryTests_1w9uyii">
+          <text>"HOUSE"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1kl7e47">
+          <text>&lt; 30</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0dvnch9">
+          <text>true</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_0a4mhw0">
+          <text>"HIGH"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0n5t9um">
+        <inputEntry id="UnaryTests_1mro3t9">
+          <text>"HOUSE"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1rd0nfu">
+          <text>&gt;= 30</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_14xmsw2">
+          <text>true</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_1od57w1">
+          <text>"LOW"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0humxd6">
+        <inputEntry id="UnaryTests_0c750x5">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0nss0oz">
+          <text></text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0lfe5ol">
+          <text>false</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_1x27juq">
+          <text>"HIGH"</text>
         </outputEntry>
       </rule>
     </decisionTable>

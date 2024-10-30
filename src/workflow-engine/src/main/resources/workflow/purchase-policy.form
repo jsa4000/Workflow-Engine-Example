@@ -27,13 +27,25 @@
       "type": "number",
       "layout": {
         "row": "Row_0ea382y",
-        "columns": null
+        "columns": 2
       },
       "id": "Field_1ct445f",
       "key": "age",
       "defaultValue": 24,
       "decimalDigits": 0,
       "increment": "1"
+    },
+    {
+      "subtype": "date",
+      "dateLabel": "Current Date",
+      "label": "Date time",
+      "type": "datetime",
+      "layout": {
+        "row": "Row_0ea382y",
+        "columns": null
+      },
+      "id": "Field_02idxhb",
+      "key": "currentDate"
     },
     {
       "values": [
