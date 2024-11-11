@@ -13,11 +13,7 @@
     <bpmn:endEvent id="Event_0atczrj">
       <bpmn:incoming>Flow_0xgp4dh</bpmn:incoming>
     </bpmn:endEvent>
-    <bpmn:endEvent id="Event_1em07p4">
-      <bpmn:incoming>Flow_17jelcz</bpmn:incoming>
-    </bpmn:endEvent>
     <bpmn:sequenceFlow id="Flow_0xgp4dh" sourceRef="validate-fields" targetRef="Event_0atczrj" />
-    <bpmn:sequenceFlow id="Flow_17jelcz" sourceRef="catch-validation-error" targetRef="Event_1em07p4" />
     <bpmn:sequenceFlow id="Flow_1s30ic7" sourceRef="Activity_08z8et1" targetRef="validate-fields" />
     <bpmn:userTask id="Activity_08z8et1" name="Debug">
       <bpmn:incoming>Flow_0q67pyg</bpmn:incoming>
@@ -34,11 +30,17 @@ if(result.result==false){
     </bpmn:scriptTask>
     <bpmn:scriptTask id="catch-validation-error" name="Catch Validation Error" scriptFormat="groovy">
       <bpmn:incoming>Flow_1gatp7i</bpmn:incoming>
-      <bpmn:outgoing>Flow_17jelcz</bpmn:outgoing>
+      <bpmn:outgoing>Flow_0bvia2k</bpmn:outgoing>
       <bpmn:script>println "Error in Validation"</bpmn:script>
     </bpmn:scriptTask>
+    <bpmn:endEvent id="Event_0xu6q8p">
+      <bpmn:incoming>Flow_0bvia2k</bpmn:incoming>
+      <bpmn:errorEventDefinition id="ErrorEventDefinition_00roa4h" errorRef="Error_1dbq4wx" />
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_0bvia2k" sourceRef="catch-validation-error" targetRef="Event_0xu6q8p" />
   </bpmn:process>
   <bpmn:error id="Error_1031koy" name="Error_3a88oc8" />
+  <bpmn:error id="Error_1dbq4wx" name="validation-error" errorCode="validation-error" camunda:errorMessage="This is validation error" />
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="process-validation">
       <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
@@ -46,9 +48,6 @@ if(result.result==false){
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_0atczrj_di" bpmnElement="Event_0atczrj">
         <dc:Bounds x="742" y="99" width="36" height="36" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_1em07p4_di" bpmnElement="Event_1em07p4">
-        <dc:Bounds x="742" y="282" width="36" height="36" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_091o9ky_di" bpmnElement="Activity_08z8et1">
         <dc:Bounds x="280" y="77" width="100" height="80" />
@@ -59,6 +58,9 @@ if(result.result==false){
       <bpmndi:BPMNShape id="Activity_1xrs91l_di" bpmnElement="catch-validation-error">
         <dc:Bounds x="480" y="260" width="100" height="80" />
         <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0xu6q8p_di" bpmnElement="Event_0xu6q8p">
+        <dc:Bounds x="742" y="282" width="36" height="36" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_1ly5ris_di" bpmnElement="Event_1ly5ris">
         <dc:Bounds x="512" y="139" width="36" height="36" />
@@ -75,13 +77,13 @@ if(result.result==false){
         <di:waypoint x="580" y="117" />
         <di:waypoint x="742" y="117" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_17jelcz_di" bpmnElement="Flow_17jelcz">
-        <di:waypoint x="580" y="300" />
-        <di:waypoint x="742" y="300" />
-      </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_1s30ic7_di" bpmnElement="Flow_1s30ic7">
         <di:waypoint x="380" y="117" />
         <di:waypoint x="480" y="117" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0bvia2k_di" bpmnElement="Flow_0bvia2k">
+        <di:waypoint x="580" y="300" />
+        <di:waypoint x="742" y="300" />
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>

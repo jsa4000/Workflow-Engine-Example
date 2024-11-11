@@ -98,6 +98,20 @@
     <bpmn:sequenceFlow id="Flow_12vtiwk" sourceRef="policy-approval" targetRef="send-confirmation" />
     <bpmn:sequenceFlow id="Flow_1upgxfv" sourceRef="send-confirmation" targetRef="Event_1didood" />
     <bpmn:sequenceFlow id="Flow_1gw4ozs" sourceRef="policy-approval-escalated" targetRef="send-confirmation" />
+    <bpmn:boundaryEvent id="Event_15gopd9" attachedToRef="validate-fields">
+      <bpmn:outgoing>Flow_1yy5i1k</bpmn:outgoing>
+      <bpmn:errorEventDefinition id="ErrorEventDefinition_1f80lm6" />
+    </bpmn:boundaryEvent>
+    <bpmn:sequenceFlow id="Flow_1yy5i1k" sourceRef="Event_15gopd9" targetRef="Activity_19qnx6s" />
+    <bpmn:endEvent id="Event_0b6c68s">
+      <bpmn:incoming>Flow_0fnn25r</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_0fnn25r" sourceRef="Activity_19qnx6s" targetRef="Event_0b6c68s" />
+    <bpmn:scriptTask id="Activity_19qnx6s" name="Cancel Policy" scriptFormat="groovy">
+      <bpmn:incoming>Flow_1yy5i1k</bpmn:incoming>
+      <bpmn:outgoing>Flow_0fnn25r</bpmn:outgoing>
+      <bpmn:script>println "The Policy has been cancelled"</bpmn:script>
+    </bpmn:scriptTask>
     <bpmn:textAnnotation id="TextAnnotation_1iwpyhg">
       <bpmn:text>Validates the policy using shared process</bpmn:text>
     </bpmn:textAnnotation>
@@ -156,10 +170,20 @@
       <bpmndi:BPMNShape id="Activity_1vxu541_di" bpmnElement="send-confirmation">
         <dc:Bounds x="1570" y="214" width="100" height="80" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNEdge id="Association_0p6zt9l_di" bpmnElement="Association_0p6zt9l">
-        <di:waypoint x="1286" y="214" />
-        <di:waypoint x="1331" y="142" />
-      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="Activity_1pxsf7e_di" bpmnElement="Activity_19qnx6s">
+        <dc:Bounds x="1380" y="520" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0b6c68s_di" bpmnElement="Event_0b6c68s">
+        <dc:Bounds x="1552" y="542" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0fr9uxu_di" bpmnElement="Event_15gopd9">
+        <dc:Bounds x="1292" y="276" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="TextAnnotation_1iwpyhg_di" bpmnElement="TextAnnotation_1iwpyhg">
+        <dc:Bounds x="1300" y="98" width="154" height="44" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_0ezfly8_di" bpmnElement="approval-escalation-timer">
         <dc:Bounds x="1402" y="276" width="36" height="36" />
         <bpmndi:BPMNLabel>
@@ -245,10 +269,19 @@
         <di:waypoint x="1620" y="430" />
         <di:waypoint x="1620" y="294" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNShape id="TextAnnotation_1iwpyhg_di" bpmnElement="TextAnnotation_1iwpyhg">
-        <dc:Bounds x="1300" y="98" width="154" height="44" />
-        <bpmndi:BPMNLabel />
-      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Association_0p6zt9l_di" bpmnElement="Association_0p6zt9l">
+        <di:waypoint x="1286" y="214" />
+        <di:waypoint x="1331" y="142" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1yy5i1k_di" bpmnElement="Flow_1yy5i1k">
+        <di:waypoint x="1310" y="312" />
+        <di:waypoint x="1310" y="560" />
+        <di:waypoint x="1380" y="560" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0fnn25r_di" bpmnElement="Flow_0fnn25r">
+        <di:waypoint x="1480" y="560" />
+        <di:waypoint x="1552" y="560" />
+      </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
 </bpmn:definitions>

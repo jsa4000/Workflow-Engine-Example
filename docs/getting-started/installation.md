@@ -1,6 +1,6 @@
 ---
 title: Installation
-tags: ["Workflow Engine"]
+tags: ["Workflow Engine","BPMN","Camunda"]
 ---
 # Camunda Installation
 

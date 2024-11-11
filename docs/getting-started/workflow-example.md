@@ -1,6 +1,6 @@
 ---
 title: Workflow Example
-tags: ["Workflow Engine"]
+tags: ["Workflow Engine","DMN","Camunda"]
 ---
 # Workflow Example
 

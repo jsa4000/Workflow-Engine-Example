@@ -1,18 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<definitions xmlns="https://www.omg.org/spec/DMN/20191111/MODEL/" xmlns:dmndi="https://www.omg.org/spec/DMN/20191111/DMNDI/" xmlns:dc="http://www.omg.org/spec/DMN/20180521/DC/" xmlns:modeler="http://camunda.org/schema/modeler/1.0" xmlns:camunda="http://camunda.org/schema/1.0/dmn" xmlns:biodi="http://bpmn.io/schema/dmn/biodi/2.0" id="process-dmn" name="DRD" namespace="http://camunda.org/schema/1.0/dmn" exporter="Camunda Modeler" exporterVersion="5.28.0" modeler:executionPlatform="Camunda Platform" modeler:executionPlatformVersion="7.22.0">
+<definitions xmlns="https://www.omg.org/spec/DMN/20191111/MODEL/" xmlns:dmndi="https://www.omg.org/spec/DMN/20191111/DMNDI/" xmlns:dc="http://www.omg.org/spec/DMN/20180521/DC/" xmlns:modeler="http://camunda.org/schema/modeler/1.0" xmlns:biodi="http://bpmn.io/schema/dmn/biodi/2.0" xmlns:di="http://www.omg.org/spec/DMN/20180521/DI/" id="process-dmn" name="DRD" namespace="http://camunda.org/schema/1.0/dmn" exporter="Camunda Modeler" exporterVersion="5.28.0" modeler:executionPlatform="Camunda Platform" modeler:executionPlatformVersion="7.22.0">
   <decision id="risk" name="Risk">
+    <informationRequirement id="InformationRequirement_01qrouu">
+      <requiredInput href="#type" />
+    </informationRequirement>
+    <informationRequirement id="InformationRequirement_0yug57g">
+      <requiredInput href="#age" />
+    </informationRequirement>
     <decisionTable id="DecisionTable_0f99zv0" hitPolicy="FIRST">
-      <input id="Input_1" label="Policy Type" biodi:width="192" camunda:inputVariable="type">
+      <input id="Input_1" label="Policy Type" biodi:width="192">
         <inputExpression id="InputExpression_1" typeRef="string">
-          <text></text>
+          <text>type</text>
         </inputExpression>
         <inputValues id="UnaryTests_02oojs0">
           <text>"CAR","HOUSE","LIFE"</text>
         </inputValues>
       </input>
-      <input id="InputClause_1grp8lp" label="Age" camunda:inputVariable="age">
+      <input id="InputClause_1grp8lp" label="Age">
         <inputExpression id="LiteralExpression_15lr8b1" typeRef="integer">
-          <text></text>
+          <text>age</text>
         </inputExpression>
       </input>
       <output id="Output_1" name="result" typeRef="boolean" />
@@ -135,11 +141,29 @@
       </rule>
     </decisionTable>
   </decision>
+  <inputData id="type" name="type" />
+  <inputData id="age" name="age" />
   <dmndi:DMNDI>
     <dmndi:DMNDiagram>
       <dmndi:DMNShape dmnElementRef="risk">
-        <dc:Bounds height="80" width="180" x="160" y="100" />
+        <dc:Bounds height="80" width="180" x="230" y="210" />
       </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_1mvc0vu" dmnElementRef="type">
+        <dc:Bounds height="45" width="125" x="157" y="77" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_063em3y" dmnElementRef="age">
+        <dc:Bounds height="45" width="125" x="347" y="77" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_1kbt7tn" dmnElementRef="InformationRequirement_01qrouu">
+        <di:waypoint x="220" y="122" />
+        <di:waypoint x="290" y="190" />
+        <di:waypoint x="290" y="210" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNEdge id="DMNEdge_1tkvh7m" dmnElementRef="InformationRequirement_0yug57g">
+        <di:waypoint x="410" y="122" />
+        <di:waypoint x="350" y="190" />
+        <di:waypoint x="350" y="210" />
+      </dmndi:DMNEdge>
     </dmndi:DMNDiagram>
   </dmndi:DMNDI>
 </definitions>
