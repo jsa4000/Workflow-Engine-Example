@@ -10,7 +10,7 @@ spring:
 # https://docs.camunda.org/manual/latest/user-guide/spring-boot-integration/configuration
 camunda:
   bpm:
-    deployment-resource-pattern: classpath:workflows/*.bpmn,classpath:workflows/*.dmn,classpath:workflows/*.form
+    deployment-resource-pattern: classpath:workflows/**/*.bpmn,classpath:workflows/**/*.dmn,classpath:workflows/**/*.form
     filter:
       # Create a default filter to see all tasks in task list
       create: All tasks

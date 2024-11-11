@@ -98,7 +98,7 @@ You can see all Camunda configuration in the [official documentation](https://do
 ```yaml
 camunda:
   bpm:
-    deployment-resource-pattern: classpath:workflows/*.bpmn,classpath:workflows/*.dmn,classpath:workflows/*.form
+    deployment-resource-pattern: classpath:workflows/**/*.bpmn,classpath:workflows/**/*.dmn,classpath:workflows/**/*.form
     filter:
       # Create a default filter to see all tasks in task list
       create: All tasks
