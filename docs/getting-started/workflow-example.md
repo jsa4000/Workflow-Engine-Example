@@ -104,6 +104,20 @@ The [policy process](process-dmn.bpmn) is a more complex BPMN process that consi
 
     ![workflow-engine](../assets/getting-started-camunda-example-bpmn-call-activity-validation.png){ width="250" align=left }
 
+    **Call Activity** allows to call a **subprocess** modeled into a different file. This allows to **share processes** instead creating embedded subprocesses in the same file.
+
+    In order to properly configure a `Call Activity`, you must set following properties into `Called Element`:
+
+    * **Type**: Call activity could be either `BPMN` or `CMMN` subprocess.
+    * **Called element**: The reference of the called element or subprocess `ID`.
+    * **Binding**: The version of the form used: `deployment`, `latest`, `version`, `versionTag`.
+    * **Business Key**: Allow to propagate the same `Business Key` to the subprocess being called.
+
+    In order the **subprocess** and **parent** share the **same variables** ensure to **check** following properties.
+
+    * `Propagate all variables` in `In Mapping Propagation`
+    * `Propagate all variables` in `Out Mapping Propagation`
+
 === "Error Event"
 
     ![workflow-engine](../assets/getting-started-camunda-example-bpmn-cancel-error-event.png){ width="250" align=left }
@@ -136,13 +150,36 @@ The [policy process](process-dmn.bpmn) is a more complex BPMN process that consi
 
     ![workflow-engine](../assets/getting-started-camunda-example-bpmn-timer-escalation.png){ width="250" align=left }
 
+    **Timer Boundary Event** can be either **interrupting** or **non-interrupting**, in this case it is **Interrupting**. **Interrupting** means once is triggered the flow changes **breaking** the normal flow. The **non-interrupting** boundary events has dotted lines and the **interrupting** not.
+
+    In order to properly configure **Timer Boundary Event** you will need to set following properties:
+
+    * **Type**: You can select between three different types: `Date`, `Duration` and `Cycle`.
+    * **Value**: The time value depending on the type. For the duration and date it uses [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) time format (i. `PT5S`, `R/PT3S`)
+
 === "Reminder"
 
     ![workflow-engine](../assets/getting-started-camunda-example-bpmn-timer-reminder.png){ width="250" align=left }
 
+    **Timer Boundary Event** can be either **interrupting** or **non-interrupting**, in this case it is **non-interrupting**. **Non-interrupting** means once is triggered the flow does not change the normal flow, instead it will run in parallel the secondary flow while it's **waiting** for the main task to be **completed**. The **non-interrupting** boundary events has dotted lines and the **interrupting** not.
+
+    In order to properly configure **Timer Boundary Event** you will need to set following properties:
+
+    * **Type**: You can select between three different types: `Date`, `Duration` and `Cycle`.
+    * **Value**: The time value depending on the type. For the duration and date it uses [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) time format (i. `PT5S`, `R/PT3S`)
+
 === "Cancel Event"
 
     ![workflow-engine](../assets/getting-started-camunda-example-bpmn-cancel-message-event.png){ width="250" align=left }
+
+    **Message Boundary Event** can be either **interrupting** or **non-interrupting**, in this case it is **Interrupting**. **Interrupting** means once is triggered the flow changes **breaking** the normal flow. The **non-interrupting** boundary events has dotted lines and the **interrupting** not.
+
+    In order to properly configure **Message Boundary Event** you will need to set following properties for the Message:
+
+    * **Global Message reference**: the message reference to be **subscribed** on. If the event does not exist it must be created.
+    * **Name**: The name of the message event.
+
+    Once **Boundary Event** receives a message using that message `name` and the `Business Key`, it will be **triggered** so the normal flow will break.
 
 === "Confirmation"
 
@@ -161,6 +198,14 @@ The [policy process](process-dmn.bpmn) is a more complex BPMN process that consi
     ```
 
 ### Forms
+
+Forms can be modeled using **Camunda Modeler**. You can add as many **elements** to the **form** and binding to **variables** that will be **submitted** to the process when the task is **completed**.
+
+!!! warning
+
+    Using **Camunda Forms** may not fit with the **web framework** or **styles** you are currently using. Because of that, you should **create** your own **forms** and bind them to the tasks by using proper identifiers.
+
+![workflow-engine](../assets/getting-started-camunda-example-forms.png)
 
 ### DMN
 
@@ -363,3 +408,6 @@ The **BPMN model** of the validation process is the **following**.
     * **Name**: The `name` of the error.
     * **Code**: The `errorCode` of the exception to be caught by a **Boundary Event**
     * **Message**: Message of the exception to be thrown.
+
+## Run
+
