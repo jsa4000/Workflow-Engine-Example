@@ -4,15 +4,50 @@ tags: ["Workflow Engine","DMN","Camunda"]
 ---
 # Workflow Example
 
+## Policy Process
 
-## Validation
+### BPMN
 
 
-![workflow-engine](../assets/getting-started-camunda-example-subprocess.png)
+
+### DMN
+
+![workflow-engine](../assets/getting-started-camunda-example-dmn.png){ width="500" }
+
+=== "Decision"
+
+    ![workflow-engine](../assets/getting-started-camunda-example-dmn-decision.png){ width="250" align=left }
+
+=== "Input Type"
+
+    ![workflow-engine](../assets/getting-started-camunda-example-dmn-input-type.png){ width="250" align=left }
+
+=== "input Age"
+
+    ![workflow-engine](../assets/getting-started-camunda-example-dmn-input-age.png){ width="250" align=left }
+
+![workflow-engine](../assets/getting-started-camunda-example-dmn-decision-table.png)
+
+=== "Inputs"
+
+    ![workflow-engine](../assets/getting-started-camunda-example-dmn-decision-input.png){ width="250" align=left }
+
+=== "Edit"
+
+    ![workflow-engine](../assets/getting-started-camunda-example-dmn-decision-edit-enum.png){ width="250" align=left }
+    ![workflow-engine](../assets/getting-started-camunda-example-dmn-decision-edit-number.png){ width="250" align=left }
+
+=== "Outputs"
+
+    ![workflow-engine](../assets/getting-started-camunda-example-dmn-decision-output.png){ width="250" align=left }
+
+## Validation Process
+
+![workflow-engine](../assets/getting-started-camunda-example-subprocess.png){ width="700" }
 
 === "Process"
 
-    ![workflow-engine](../assets/getting-started-camunda-example-subprocess-process.png){ width="300" align=left }
+    ![workflow-engine](../assets/getting-started-camunda-example-subprocess-process.png){ width="250" align=left }
 
     In the **Process** tab you will have to configure the **Name** and **ID** of the process.
 
@@ -26,7 +61,7 @@ tags: ["Workflow Engine","DMN","Camunda"]
 
 === "Validate Task"
 
-    ![workflow-engine](../assets/getting-started-camunda-example-subprocess-script-validate.png){ width="300" align=left }
+    ![workflow-engine](../assets/getting-started-camunda-example-subprocess-script-validate.png){ width="250" align=left }
 
     This is an **automatic task** that support scripting. There are several [scripting languages](https://docs.camunda.org/manual/7.22/user-guide/process-engine/scripting/) supported by Camunda. You would need to add dependencies to support various languages into the Camunda project.
 
@@ -61,7 +96,7 @@ tags: ["Workflow Engine","DMN","Camunda"]
 
 === "Error Boundary"
 
-    ![workflow-engine](../assets/getting-started-camunda-example-subprocess-error-boundary.png){ width="300" align=left }
+    ![workflow-engine](../assets/getting-started-camunda-example-subprocess-error-boundary.png){ width="250" align=left }
 
     **Boundary events** provide a way to model what should happen if an event occurs while an activity is still **active**.
 
@@ -85,7 +120,7 @@ tags: ["Workflow Engine","DMN","Camunda"]
 
 === "Error Task"
 
-    ![workflow-engine](../assets/getting-started-camunda-example-subprocess-script-error.png){ width="300" align=left } 
+    ![workflow-engine](../assets/getting-started-camunda-example-subprocess-script-error.png){ width="250" align=left } 
 
     This is a **Script Task** will only prints an **output log** into the **console**.
 
@@ -97,13 +132,13 @@ tags: ["Workflow Engine","DMN","Camunda"]
 
 === "Error Event"
 
-    ![workflow-engine](../assets/getting-started-camunda-example-subprocess-error-event.png){ width="300" align=left }
+    ![workflow-engine](../assets/getting-started-camunda-example-subprocess-error-event.png){ width="250" align=left }
 
     In a process you can define **End Events** that will be used later by the parent process and caught by the corresponding **Boundary Events**. Similar when an exception is thrown by the system or a task, you can throw a **typed exception** at the end of the process using **Error End Events**.
 
     Following an example of a **Call Activity** that will catch an exception from a subprocess and **react** accordingly.
 
-    ![workflow-engine](../assets/getting-started-camunda-example-subprocess-error-event-catch.png){ width="500" }
+    ![workflow-engine](../assets/getting-started-camunda-example-subprocess-error-event-catch.png){ width="350" }
 
     The common parameters to be configured using ***Error End Event*** are:
 
