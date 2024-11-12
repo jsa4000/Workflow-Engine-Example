@@ -340,6 +340,7 @@ Request
 ```bash
 # Claim Task. You will need to know the task id and the user id.
 TASK_ID=081da124-a136-11ef-b98f-36542ecc2075
+USER_ID=admin
 curl --location "http://localhost:8080/engine-rest/task/$TASK_ID/claim" \
 --header 'Content-Type: application/json' \
 --header 'Accept: application/json' \
@@ -368,7 +369,3 @@ curl --location "http://localhost:8080/engine-rest/task/$TASK_ID/submit-form" \
 }' \
 | jq .
 ```
-
-Response
-
-N/A
