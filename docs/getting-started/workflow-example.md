@@ -1,8 +1,8 @@
 ---
-title: Workflow Example
+title: Example
 tags: ["Workflow Engine","DMN","Camunda"]
 ---
-# Workflow Example
+# Example
 
 ## Policy Process
 
@@ -42,6 +42,10 @@ tags: ["Workflow Engine","DMN","Camunda"]
     ![workflow-engine](../assets/getting-started-camunda-example-dmn-decision-output.png){ width="250" align=left }
 
 ## Validation Process
+
+!!! note
+
+    The process bellow have a **Debug** User Task so it will be **easier** to debug and **watch** variables, since it will stop the flow at that stage. **You will need to remove it at the end**.
 
 ![workflow-engine](../assets/getting-started-camunda-example-subprocess.png){ width="700" }
 

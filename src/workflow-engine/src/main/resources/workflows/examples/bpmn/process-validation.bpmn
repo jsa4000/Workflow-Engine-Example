@@ -9,18 +9,13 @@
       <bpmn:errorEventDefinition id="ErrorEventDefinition_1ewghm9" />
     </bpmn:boundaryEvent>
     <bpmn:sequenceFlow id="Flow_1gatp7i" sourceRef="Event_1ly5ris" targetRef="catch-validation-error" />
-    <bpmn:sequenceFlow id="Flow_0q67pyg" sourceRef="StartEvent_1" targetRef="Activity_08z8et1" />
+    <bpmn:sequenceFlow id="Flow_0q67pyg" sourceRef="StartEvent_1" targetRef="validate-fields" />
     <bpmn:endEvent id="Event_0atczrj">
       <bpmn:incoming>Flow_0xgp4dh</bpmn:incoming>
     </bpmn:endEvent>
     <bpmn:sequenceFlow id="Flow_0xgp4dh" sourceRef="validate-fields" targetRef="Event_0atczrj" />
-    <bpmn:sequenceFlow id="Flow_1s30ic7" sourceRef="Activity_08z8et1" targetRef="validate-fields" />
-    <bpmn:userTask id="Activity_08z8et1" name="Debug">
-      <bpmn:incoming>Flow_0q67pyg</bpmn:incoming>
-      <bpmn:outgoing>Flow_1s30ic7</bpmn:outgoing>
-    </bpmn:userTask>
     <bpmn:scriptTask id="validate-fields" name="Validate Fields" scriptFormat="groovy">
-      <bpmn:incoming>Flow_1s30ic7</bpmn:incoming>
+      <bpmn:incoming>Flow_0q67pyg</bpmn:incoming>
       <bpmn:outgoing>Flow_0xgp4dh</bpmn:outgoing>
       <bpmn:script>var result = execution.getVariable("result");
 println result;
@@ -43,47 +38,40 @@ if(result.result==false){
   <bpmn:error id="Error_1dbq4wx" name="validation-error" errorCode="validation-error" camunda:errorMessage="This is validation error" />
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="process-validation">
+      <bpmndi:BPMNShape id="Event_0atczrj_di" bpmnElement="Event_0atczrj">
+        <dc:Bounds x="592" y="99" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1gkig6w_di" bpmnElement="validate-fields">
+        <dc:Bounds x="330" y="77" width="100" height="80" />
+      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
         <dc:Bounds x="152" y="99" width="36" height="36" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_0atczrj_di" bpmnElement="Event_0atczrj">
-        <dc:Bounds x="742" y="99" width="36" height="36" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_091o9ky_di" bpmnElement="Activity_08z8et1">
-        <dc:Bounds x="280" y="77" width="100" height="80" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_1gkig6w_di" bpmnElement="validate-fields">
-        <dc:Bounds x="480" y="77" width="100" height="80" />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_1xrs91l_di" bpmnElement="catch-validation-error">
-        <dc:Bounds x="480" y="260" width="100" height="80" />
+        <dc:Bounds x="330" y="220" width="100" height="80" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_0xu6q8p_di" bpmnElement="Event_0xu6q8p">
-        <dc:Bounds x="742" y="282" width="36" height="36" />
+        <dc:Bounds x="592" y="242" width="36" height="36" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_1ly5ris_di" bpmnElement="Event_1ly5ris">
-        <dc:Bounds x="512" y="139" width="36" height="36" />
+        <dc:Bounds x="362" y="139" width="36" height="36" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Flow_1gatp7i_di" bpmnElement="Flow_1gatp7i">
-        <di:waypoint x="530" y="175" />
-        <di:waypoint x="530" y="260" />
+        <di:waypoint x="380" y="175" />
+        <di:waypoint x="380" y="220" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0q67pyg_di" bpmnElement="Flow_0q67pyg">
         <di:waypoint x="188" y="117" />
-        <di:waypoint x="280" y="117" />
+        <di:waypoint x="330" y="117" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0xgp4dh_di" bpmnElement="Flow_0xgp4dh">
-        <di:waypoint x="580" y="117" />
-        <di:waypoint x="742" y="117" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_1s30ic7_di" bpmnElement="Flow_1s30ic7">
-        <di:waypoint x="380" y="117" />
-        <di:waypoint x="480" y="117" />
+        <di:waypoint x="430" y="117" />
+        <di:waypoint x="592" y="117" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0bvia2k_di" bpmnElement="Flow_0bvia2k">
-        <di:waypoint x="580" y="300" />
-        <di:waypoint x="742" y="300" />
+        <di:waypoint x="430" y="260" />
+        <di:waypoint x="592" y="260" />
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
