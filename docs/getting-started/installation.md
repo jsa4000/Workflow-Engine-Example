@@ -2,8 +2,6 @@
 title: Installation
 tags: ["Workflow Engine","BPMN","Camunda"]
 ---
-# Camunda Installation
-
 This section describe how to **install** and **run** the basic **components** and **tools** to start developing using **Camunda Workflow Engine**.
 
 ## Create Project

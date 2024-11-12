@@ -2,8 +2,6 @@
 title: Example
 tags: ["Workflow Engine","DMN","Camunda"]
 ---
-# Example
-
 ## Policy Process
 
 ### BPMN
@@ -408,6 +406,3 @@ The **BPMN model** of the validation process is the **following**.
     * **Name**: The `name` of the error.
     * **Code**: The `errorCode` of the exception to be caught by a **Boundary Event**
     * **Message**: Message of the exception to be thrown.
-
-## Run
-
