@@ -8,40 +8,99 @@ tags: ["Workflow Engine","DMN","Camunda"]
 
 ### BPMN
 
-
-
 ### DMN
+
+**DMN stands for Decision Model and Notation**. It is a **standard** administered by the **Object Management Group (OMG)** and has been widely adopted across various industries. Businesses leverage **DMN** to design **decision models** that are used for **automation** of the **decision-making** processes. DMN serves as a common language to **align business and IT** on repeatable **business rules** and **decision management**. The notation enhances business efficiency, reduces the risk of human error, and ensures that decision models are interchangeable across the organization.
+
+Core elements of DMN include:
+
+* **Decision tables**: Simple and intuitive **representation** of decisions consisting of **input**, **condition**, and **output**.
+* **Friendly Enough Expression Language (FEEL)**: Used to **express conditions** in the decision tables so they can be executed.
+* **Decision Requirements Diagrams (DRD)**: Created when a decision **can not be described in just one simple table**. For example, when there are dependencies between intermediate decisions output from which serve as an input for the final decision to be made.
+
+The example [process dmn](process-dmn.dmn) consist in **one decision** table and **two inputs**, there is no additional **DRD** or **functions**.
 
 ![workflow-engine](../assets/getting-started-camunda-example-dmn.png){ width="500" }
 
-=== "Decision"
+=== "Decision Table"
 
     ![workflow-engine](../assets/getting-started-camunda-example-dmn-decision.png){ width="250" align=left }
 
-=== "Input Type"
+    A **decision table** represents **decision logic** which can be depicted as a table in **DMN**. It consists of **inputs**, **outputs** and **rules**. Decision Tables can be **chained** by creating a **Decision Requirements Diagrams (DRD)**
+
+    ![workflow-engine](../assets/getting-started-camunda-example-dmn-drd.png){ width="400" }
+
+    In the configuration tab **Name** and ID must be specified for the **DMN**.
+
+=== "Inputs"
 
     ![workflow-engine](../assets/getting-started-camunda-example-dmn-input-type.png){ width="250" align=left }
-
-=== "input Age"
-
     ![workflow-engine](../assets/getting-started-camunda-example-dmn-input-age.png){ width="250" align=left }
+
+    Inputs must be **named** in the **same way** as the variables from the **process** (i.e `type`, `age`).
+
+    Later these **inputs** can be **referenced** in the Decision Table as an **Expressions**. This way it makes more **explicit** the **inputs** used for each Decision Table from the **DMN**
+
+A **decision table** consists of **several rules**, typically represented as **rows**. When reading such a row, we look at certain **input values** and **deduct** a certain **result** represented by **output values**.
+
+**Hit policies** describe different ways (standardized by DMN) to **evaluate** the rules contained in a decision table. **Different** hit policies do not only **lead** to **different results**, but typically also **require** different modes of thinking and reason about the meaning of the entire table. For example, When using the simplest hit policy "unique" or "first", such rules **do not overlap**: only a **single rule** must match.
 
 ![workflow-engine](../assets/getting-started-camunda-example-dmn-decision-table.png)
 
 === "Inputs"
 
-    ![workflow-engine](../assets/getting-started-camunda-example-dmn-decision-input.png){ width="250" align=left }
+    ![workflow-engine](../assets/getting-started-camunda-example-dmn-decision-input.png){ width="250" align=left }  
+
+    Depending if you are defining de **inputs** in the **DRD**, you can use an **Expression** or use **Input Variable** instead.
+
+    ![workflow-engine](../assets/getting-started-camunda-example-dmn.png){ width="350" }
+
+    So, if you already have an **input data** named `type` you can use the **same value** for the **expression**. However if you **don't have** defined any **input data** to your ** **, then you must use **Input Variable** with the variable `type`.
+    
+    !!! note
+    
+        It's **best practice** to use **inputs** from **expressions** rather than **row inputs**, since you can watch all inputs be seeing the **DRD**.
+
+    Using `string` types you can define **predefined values** (aka *enumerations*) in order to restrict possible values to choose from.
 
 === "Edit"
 
     ![workflow-engine](../assets/getting-started-camunda-example-dmn-decision-edit-enum.png){ width="250" align=left }
     ![workflow-engine](../assets/getting-started-camunda-example-dmn-decision-edit-number.png){ width="250" align=left }
 
+    Depending on  you input **types** you can select the **condition** to evaluate (`Match one`, `Comparison`) and the values to **compare with** (`CAR`,`< 30`). 
+
 === "Outputs"
 
     ![workflow-engine](../assets/getting-started-camunda-example-dmn-decision-output.png){ width="250" align=left }
 
+    For the out put you must decide the **type** of the output and the **value** for each row. 
+    
+    You can have **multiple** outputs returned in the final result.
+
+The final **result** from the **DMN** will be used by flow and for the [validation process](workflow-example.md#validation-process) with the following `json` format.
+
+```json
+{
+  "result": true,
+  "risk": "MID"
+}
+```
+
 ## Validation Process
+
+The [validation process](process-validation.bpmn) consist in one automatic task (`Script Task`) that checks whether the **result** from previous operation was **successful**. Otherwise, it will **throw an exception** that terminates the subprocess with an **error**. This error will be **caught** by the **parent process** in order to perform an action.
+
+Following is the structure of the **result** from the [DMN Task](workflow-example.md#dmn)
+
+```json
+{
+  "result": true,
+  "risk": "MID"
+}
+```
+
+The **BPMN model** of the validation process is the **following**.
 
 !!! note
 
@@ -122,7 +181,7 @@ tags: ["Workflow Engine","DMN","Camunda"]
 
         In the example this Error Boundary Event will catch any error thrown by the Task, so it won't take into consideration the `errorCode` of the exception so it catches **all thrown errors**.
 
-=== "Error Task"
+=== "Validation Error"
 
     ![workflow-engine](../assets/getting-started-camunda-example-subprocess-script-error.png){ width="250" align=left } 
 
@@ -150,4 +209,3 @@ tags: ["Workflow Engine","DMN","Camunda"]
     * **Name**: The `name` of the error.
     * **Code**: The `errorCode` of the exception to be caught by a **Boundary Event**
     * **Message**: Message of the exception to be thrown.
-    
