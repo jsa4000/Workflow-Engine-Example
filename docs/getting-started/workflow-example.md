@@ -8,6 +8,12 @@ tags: ["Workflow Engine","DMN","Camunda"]
 
 ### BPMN
 
+**Business Process Model and Notation (BPMN 2.0)** was developed as a **graphical notation** to **represent complex processes** and address these challenges. The visual nature of BPMN enables **greater collaboration** between different teams.
+
+The [policy process](process-dmn.bpmn) is a more complex BPMN process that consist on several **User Tasks**, **Script Tasks**, **Call Activity** (subprocess) and multiple **Gateways** and **boundary events**.
+
+![workflow-engine](../assets/getting-started-camunda-example-bpmn.png)
+
 ### DMN
 
 **DMN stands for Decision Model and Notation**. It is a **standard** administered by the **Object Management Group (OMG)** and has been widely adopted across various industries. Businesses leverage **DMN** to design **decision models** that are used for **automation** of the **decision-making** processes. DMN serves as a common language to **align business and IT** on repeatable **business rules** and **decision management**. The notation enhances business efficiency, reduces the risk of human error, and ensures that decision models are interchangeable across the organization.
