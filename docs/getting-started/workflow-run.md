@@ -42,12 +42,42 @@ An email has been sent to the user to deny the policy.
 
 ### API Rest
 
-#### Get All Process Definitions
+#### Admin
+
+##### Get All Users
 
 Request
 
 ```bash
-# Get all process definitions. You can filter processed by active, process key, etc..
+# Get all users. You can filter users by firstName, email, emailLike, id, etc..
+curl --location 'http://localhost:8080/engine-rest/user' \
+--header 'Accept: application/json' \
+| jq .
+```
+
+Response
+
+```json
+[
+    {
+        "id": "admin", // (1)!
+        "firstName": "Admin",
+        "lastName": "Admin",
+        "email": "admin@localhost"
+    }
+]
+```
+
+1. **User identifier** to be used in operations such as **claim task**
+
+#### Process
+
+##### Get All Process Definitions
+
+Request
+
+```bash
+# Get all process definitions. You can filter processes by active, process key, etc..
 curl --location 'http://localhost:8080/engine-rest/process-definition' \
 --header 'Accept: application/json' \
 | jq .
@@ -77,11 +107,12 @@ Response
 ]
 ```
 
+
 1. The **Process key** that will be used to create a **new Process instance**.
 2. The **Name** of the process.
 3. The latest **version** of the process deployed.
 
-#### Start Process Instance
+##### Start Process Instance
 
 Request
 
@@ -122,7 +153,46 @@ Response
 1. The **internal identifier** generated for the current process instance.
 2. The **external identifier** of the process.
 
-#### Get All Tasks
+##### Get All Process Instances
+
+Request
+
+```bash
+# Get all process instances. You can filter processes by processKey, definitionIDd, etc..
+PROCESS_KEY=process-dmn
+curl --location 'http://localhost:8080/engine-rest/process-instance?firstResult=0&maxResults=50' \
+--header 'Content-Type: application/json' \
+--header 'Accept: application/json' \
+--data '{
+  "processDefinitionKey": "'"$PROCESS_KEY"'"
+}' \
+| jq .
+```
+
+Response
+
+```json
+[
+  {
+    "links": [],
+    "id": "3f299e33-a137-11ef-b98f-36542ecc2075", // (1)!
+    "definitionId": "process-dmn:1:8b5fb8a9-a126-11ef-b98f-36542ecc2075",
+    "businessKey": "1234", // (2)!
+    "caseInstanceId": null,
+    "ended": false,
+    "suspended": false,
+    "tenantId": null
+  },
+ // more process instances.
+]
+```
+
+1. The internal **process instance identifier**.
+2. The **BusinessKey** of the process.
+
+#### Task
+
+##### Get All Tasks
 
 Request
 
@@ -180,33 +250,11 @@ Response
 4. The **task definition key** used in BPMN.
 5. The **form** attached to this task.
 
-#### Get All Users
+##### Claim Task
 
-Request
+!!! note
 
-```bash
-# Get all users. You can filter processed by firstName, email, emailLike, id, etc..
-curl --location 'http://localhost:8080/engine-rest/user' \
---header 'Accept: application/json' \
-| jq .
-```
-
-Response
-
-```json
-[
-    {
-        "id": "admin", // (1)!
-        "firstName": "Admin",
-        "lastName": "Admin",
-        "email": "admin@localhost"
-    }
-]
-```
-
-1. **User identifier** to be used in operations such as **claim task**
-
-#### Claim Task
+    It's **not necessary** to claim a task before its completion.
 
 Request
 
@@ -227,7 +275,7 @@ Response
 
 N/A
 
-#### Get Task by Id (Approval Escalation)
+##### Get Task by Id
 
 Request
 
@@ -280,15 +328,75 @@ Response
 ]
 ```
 
-1. the task has been assigned to `admin` user.
+1. **Current assignee** to the task. If the task **was not claimed** before, this value will be `null`.
 
-#### Submit Form (Purchase Policy)
+##### Complete
+
+**Purchase Policy**
+
+Request
+
+```bash
+# Complete Task
+TASK_ID=3f29c546-a137-11ef-b98f-36542ecc2075
+curl --location "http://localhost:8080/engine-rest/task/$TASK_ID/complete" \
+--header 'Content-Type: application/json' \
+--header 'Accept: application/json' \
+--data '{
+  "variables": {
+    "name": {
+      "value": "MyName"
+    },
+    "surname": {
+      "value": "MySurname"
+    },
+    "age": {
+      "value": 24
+    },
+    "currentDate": {
+      "value": "2024-11-20"
+    },
+    "type": {
+      "value": "CAR"
+    }
+  }
+}' \
+| jq .
+```
+
+Response
+
+N/A
+
+**Approval Escalation**
+
+Request
+
+```bash
+# Complete Task
+TASK_ID=c22ce7f7-a190-11ef-b98f-36542ecc2075
+curl --location "http://localhost:8080/engine-rest/task/$TASK_ID/complete" \
+--header 'Content-Type: application/json' \
+--header 'Accept: application/json' \
+--data '{
+  "variables": {
+    "approved": {
+      "value": false
+    }
+  }
+}' \
+| jq .
+```
+
+##### Submit Form
+
+**Purchase Policy**
 
 Request
 
 ```bash
 # Submit form
-TASK_ID=c3ae18d3-a135-11ef-b98f-36542ecc2075
+TASK_ID=3f29c546-a137-11ef-b98f-36542ecc2075
 curl --location "http://localhost:8080/engine-rest/task/$TASK_ID/submit-form" \
 --header 'Content-Type: application/json' \
 --header 'Accept: application/json' \
@@ -318,39 +426,7 @@ Response
 
 N/A
 
-#### Get All Tasks
-
-Request
-
-```bash
-# Get all tasks. You can filter processed by candidate groups, candidate users, business key, etc..
-curl --location 'http://localhost:8080/engine-rest/task?firstResult=0&maxResults=50' \
---header 'Content-Type: application/json' \
---header 'Accept: application/json' \
---data '{
-  "active": "true"
-}' \
-| jq .
-```
-
-#### Claim Task (Approval Escalation)
-
-Request
-
-```bash
-# Claim Task. You will need to know the task id and the user id.
-TASK_ID=081da124-a136-11ef-b98f-36542ecc2075
-USER_ID=admin
-curl --location "http://localhost:8080/engine-rest/task/$TASK_ID/claim" \
---header 'Content-Type: application/json' \
---header 'Accept: application/json' \
---data '{
-  "userId": "'"$USER_ID"'"
-}' \
-| jq .
-```
-
-#### Submit Form (Approval Escalation)
+**Approval Escalation**
 
 Request
 
@@ -368,4 +444,257 @@ curl --location "http://localhost:8080/engine-rest/task/$TASK_ID/submit-form" \
   }
 }' \
 | jq .
+```
+
+##### Get Task Variables
+
+**Task Variables**
+
+Request
+
+```bash
+# Get Task Variables (forms)
+TASK_ID=308977e1-a191-11ef-b98f-36542ecc2075
+curl --location "http://localhost:8080/engine-rest/task/$TASK_ID/variables?deserializeValues=true" \
+--header 'Accept: application/json' \
+| jq .
+```
+
+Response
+
+```json
+{
+  "result": {
+    "type": "Object",
+    "value": {
+      "result": true,
+      "risk": "MID"
+    },
+    "valueInfo": {
+      "objectTypeName": "java.util.HashMap",
+      "serializationDataFormat": "application/x-java-serialized-object"
+    }
+  },
+  "surname": {
+    "type": "String",
+    "value": "MySurname",
+    "valueInfo": {}
+  },
+  "name": {
+    "type": "String",
+    "value": "MyName",
+    "valueInfo": {}
+  },
+  "currentDate": {
+    "type": "String",
+    "value": "2024-11-20",
+    "valueInfo": {}
+  },
+  "type": {
+    "type": "String",
+    "value": "CAR",
+    "valueInfo": {}
+  },
+  "age": {
+    "type": "Integer",
+    "value": 24,
+    "valueInfo": {}
+  }
+}
+```
+
+**Form Variables**
+
+Request
+
+```bash
+# Get Task Variables (forms)
+TASK_ID=3dbe1f9a-a18f-11ef-b98f-36542ecc2075
+curl --location "http://localhost:8080/engine-rest/task/$TASK_ID/form-variables?deserializeValues=true" \
+--header 'Accept: application/json' \
+| jq .
+```
+
+Response
+
+```json
+{
+  "result": {
+    "type": "Object",
+    "value": {
+      "result": true,
+      "risk": "MID"
+    },
+    "valueInfo": {
+      "objectTypeName": "java.util.HashMap",
+      "serializationDataFormat": "application/x-java-serialized-object"
+    }
+  },
+  "surname": {
+    "type": "String",
+    "value": "MySurname",
+    "valueInfo": {}
+  },
+  "name": {
+    "type": "String",
+    "value": "MyName",
+    "valueInfo": {}
+  },
+  "currentDate": {
+    "type": "String",
+    "value": "2024-11-20",
+    "valueInfo": {}
+  },
+  "type": {
+    "type": "String",
+    "value": "CAR",
+    "valueInfo": {}
+  },
+  "age": {
+    "type": "Integer",
+    "value": 24,
+    "valueInfo": {}
+  }
+}
+```
+
+##### Get Deployed Form
+
+Request
+
+```bash
+# Get Deployed Form by task id
+TASK_ID=3dbe1f9a-a18f-11ef-b98f-36542ecc2075
+curl --location "http://localhost:8080/engine-rest/task/$TASK_ID/deployed-form" \
+--header 'Accept: application/xhtml+xml' \
+| jq .
+```
+
+Response
+
+```json
+{
+  "components": [
+    {
+      "label": "Approve",
+      "type": "checkbox",
+      "layout": {
+        "row": "Row_0a5rbmx",
+        "columns": null
+      },
+      "id": "Field_1eatpg7",
+      "key": "approved"
+    }
+  ],
+  "type": "default",
+  "id": "approval",
+  "exporter": {
+    "name": "Camunda Modeler",
+    "version": "5.28.0"
+  },
+  "executionPlatform": "Camunda Platform",
+  "executionPlatformVersion": "7.22.0",
+  "schemaVersion": 16
+}
+```
+
+#### Historical
+
+##### Process Instances
+
+Request
+
+```bash
+# Historical Process Instances
+PROCESS_KEY=process-dmn
+curl --location 'http://localhost:8080/engine-rest/history/process-instance?firstResult=0&maxResults=50' \
+--header 'Content-Type: application/json' \
+--header 'Accept: application/json' \
+--data '{
+    "processDefinitionKey": "'"$PROCESS_KEY"'"
+}' \
+| jq .
+```
+
+Response
+
+```json
+[
+  {
+    "id": "24ad1fd7-a191-11ef-b98f-36542ecc2075",
+    "businessKey": "1234",
+    "processDefinitionId": "process-dmn:1:8b5fb8a9-a126-11ef-b98f-36542ecc2075",
+    "processDefinitionKey": "process-dmn",
+    "processDefinitionName": "Process DMN",
+    "processDefinitionVersion": 1,
+    "startTime": "2024-11-13T08:30:22.943+0100",
+    "endTime": null,
+    "removalTime": null,
+    "durationInMillis": null,
+    "startUserId": "admin",
+    "startActivityId": "StartEvent_1",
+    "deleteReason": null,
+    "rootProcessInstanceId": "24ad1fd7-a191-11ef-b98f-36542ecc2075",
+    "superProcessInstanceId": null,
+    "superCaseInstanceId": null,
+    "caseInstanceId": null,
+    "tenantId": null,
+    "state": "ACTIVE",
+    "restartedProcessInstanceId": null
+  },
+  // more historical data
+]
+```
+
+##### Tasks
+
+Request
+
+```bash
+# Get task by id. You can filter processed by candidate groups, candidate users, business key, etc..
+BUSINESS_KEY=1234
+curl --location 'http://localhost:8080/engine-rest/history/task?firstResult=0&maxResults=50' \
+--header 'Content-Type: application/json' \
+--header 'Accept: application/json' \
+--data '{
+  "processInstanceBusinessKey": "'"$BUSINESS_KEY"'"
+}' \
+| jq .
+```
+
+Response
+
+```json
+[
+  {
+    "id": "f2c092fa-a135-11ef-b98f-36542ecc2075",
+    "processDefinitionKey": "process-dmn",
+    "processDefinitionId": "process-dmn:1:8b5fb8a9-a126-11ef-b98f-36542ecc2075",
+    "processInstanceId": "c3adcab0-a135-11ef-b98f-36542ecc2075",
+    "executionId": "f2c06be6-a135-11ef-b98f-36542ecc2075",
+    "caseDefinitionKey": null,
+    "caseDefinitionId": null,
+    "caseInstanceId": null,
+    "caseExecutionId": null,
+    "activityInstanceId": "policy-approval:f2c06be7-a135-11ef-b98f-36542ecc2075",
+    "name": "Approval",
+    "description": null,
+    "deleteReason": "deleted",
+    "owner": null,
+    "assignee": null,
+    "startTime": "2024-11-12T21:37:34.982+0100",
+    "endTime": "2024-11-12T21:38:10.818+0100",
+    "duration": 35836,
+    "taskDefinitionKey": "policy-approval",
+    "priority": 50,
+    "due": null,
+    "parentTaskId": null,
+    "followUp": null,
+    "tenantId": null,
+    "removalTime": "2025-05-11T21:39:22.032+0200",
+    "rootProcessInstanceId": "c3adcab0-a135-11ef-b98f-36542ecc2075",
+    "taskState": "Deleted"
+  },
+  // more historical data
+]
 ```
