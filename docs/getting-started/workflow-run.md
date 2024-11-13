@@ -22,6 +22,10 @@ Refresh the page `F12` in order to get **all pending tasks**. Select the **Purch
 
 Go to [Cockpit](http://localhost:8080/camunda/app/cockpit/default/) and select the **Process DMN** deployment and the current process instance to get process **information** and **insights**. From this **dashboard** you can get the **current state** of the process: watch all variables, current task and additional information.
 
+!!! note "Enterprise Feature"
+
+    **Historical data** is only included in the enterprise edition of Camunda 7, it is **not available** in the **community edition**.
+
 ![workflow-engine](getting-started-camunda-example-run-policy-cockpit-bpmn.png)
 
 Go to **Decisions**, then select the **Decision Table** used by this process (`Risk`) and select the **current process instance** being running. In this **dashboard** you can see the **decision made** by the **DMN** highlighted.
