@@ -1,0 +1,56 @@
+spring:
+  application:
+    name: data-service
+  datasource:
+    url: jdbc:h2:mem:db
+    username: sa
+    password: password
+    driverClassName: org.h2.Driver
+  data:
+    # https://docs.spring.io/spring-data/rest/docs/current-SNAPSHOT/reference/html/#getting-started.changing-other-properties
+    rest:
+      basePath: /api
+      # defaultMediaType: application/json
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    show-sql: true
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+
+server:
+  port: 8082
+
+# https://docs.camunda.org/manual/7.22/user-guide/ext-client/spring-boot-starter/
+camunda.bpm.client:
+  base-url: http://localhost:8080/engine-rest
+  worker-id: spring-boot-worker
+  creditScoreChecker:
+    process-definition-key: loan_process
+    include-extension-properties: true
+    variable-names: defaultScore
+
+info:
+  application:
+    name: '@project.name@'
+    description: '@project.description@'
+    version: '@project.version@'
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+
+springdoc:
+  pathsToMatch: /api/**
+  packagesToScan: com.example
+  swagger-ui:
+    enabled: true
+    path: /index.html
+  api-docs:
+    enabled: true
+    path: /v3/api-docs
+

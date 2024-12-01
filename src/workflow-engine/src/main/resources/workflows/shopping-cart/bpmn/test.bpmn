@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:modeler="http://camunda.org/schema/modeler/1.0" id="Definitions_0fseetk" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="5.28.0" modeler:executionPlatform="Camunda Platform" modeler:executionPlatformVersion="7.22.0">
+  <bpmn:process id="Process_036hfnh" name="Test" isExecutable="true" camunda:historyTimeToLive="180">
+    <bpmn:startEvent id="StartEvent_1">
+      <bpmn:outgoing>Flow_08p168i</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:endEvent id="Event_0zbb4c4">
+      <bpmn:incoming>Flow_0eikehk</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_0lk8rn1" sourceRef="Activity_0uq0gfr" targetRef="Activity_01cklmv" />
+    <bpmn:serviceTask id="Activity_0uq0gfr" name="Test" camunda:type="external" camunda:topic="creditScoreChecker">
+      <bpmn:extensionElements>
+        <camunda:inputOutput>
+          <camunda:inputParameter name="localVariable">This is a local variable</camunda:inputParameter>
+        </camunda:inputOutput>
+      </bpmn:extensionElements>
+      <bpmn:outgoing>Flow_0lk8rn1</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:sequenceFlow id="Flow_0ecsqzy" sourceRef="Activity_01cklmv" targetRef="Activity_0fy2r6p" />
+    <bpmn:scriptTask id="Activity_01cklmv" name="Test" scriptFormat="groovy">
+      <bpmn:incoming>Flow_0lk8rn1</bpmn:incoming>
+      <bpmn:outgoing>Flow_0ecsqzy</bpmn:outgoing>
+      <bpmn:script>println "Hellooo"</bpmn:script>
+    </bpmn:scriptTask>
+    <bpmn:serviceTask id="Activity_168dwyl" name="Http GET" camunda:asyncBefore="true">
+      <bpmn:documentation>https://docs.camunda.org/manual/7.22/user-guide/process-engine/connectors/
+
+https://github.com/rob2universe/camunda-http-connector-example
+
+https://github.com/camunda-community-hub/Make-Rest-Calls-From-Camunda-7-Example</bpmn:documentation>
+      <bpmn:extensionElements>
+        <camunda:connector>
+          <camunda:inputOutput>
+            <camunda:inputParameter name="method">GET</camunda:inputParameter>
+            <camunda:inputParameter name="headers">
+              <camunda:map>
+                <camunda:entry key="Content-Type">application/json</camunda:entry>
+              </camunda:map>
+            </camunda:inputParameter>
+            <camunda:inputParameter name="url">http://localhost:8082/api/people?page=0&amp;size=20</camunda:inputParameter>
+            <camunda:outputParameter name="result">${S(response)}</camunda:outputParameter>
+            <camunda:outputParameter name="statusCode">${statusCode}</camunda:outputParameter>
+          </camunda:inputOutput>
+          <camunda:connectorId>http-connector</camunda:connectorId>
+        </camunda:connector>
+        <camunda:executionListener event="end">
+          <camunda:script scriptFormat="groovy">if (statusCode != 200) {
+    throw new org.camunda.bpm.engine.delegate.BpmnError("http-error");
+} </camunda:script>
+        </camunda:executionListener>
+        <camunda:failedJobRetryTimeCycle>R3/PT5S</camunda:failedJobRetryTimeCycle>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_08p168i</bpmn:incoming>
+      <bpmn:outgoing>Flow_0q4kzn7</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:sequenceFlow id="Flow_0eikehk" sourceRef="Activity_0fy2r6p" targetRef="Event_0zbb4c4" />
+    <bpmn:userTask id="Activity_0fy2r6p" name="Debug">
+      <bpmn:incoming>Flow_0ecsqzy</bpmn:incoming>
+      <bpmn:incoming>Flow_0fz3wvc</bpmn:incoming>
+      <bpmn:outgoing>Flow_0eikehk</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:sequenceFlow id="Flow_08p168i" sourceRef="StartEvent_1" targetRef="Activity_168dwyl" />
+    <bpmn:sequenceFlow id="Flow_0q4kzn7" sourceRef="Activity_168dwyl" targetRef="Activity_0sctxdc" />
+    <bpmn:serviceTask id="Activity_0sctxdc" name="Http POST">
+      <bpmn:documentation>https://docs.camunda.org/manual/7.22/user-guide/process-engine/connectors/
+
+https://github.com/rob2universe/camunda-http-connector-example
+
+https://github.com/camunda-community-hub/Make-Rest-Calls-From-Camunda-7-Example</bpmn:documentation>
+      <bpmn:extensionElements>
+        <camunda:connector>
+          <camunda:inputOutput>
+            <camunda:inputParameter name="method">POST</camunda:inputParameter>
+            <camunda:inputParameter name="headers">
+              <camunda:map>
+                <camunda:entry key="Content-Type">application/json</camunda:entry>
+              </camunda:map>
+            </camunda:inputParameter>
+            <camunda:inputParameter name="url">http://localhost:8082/api/people</camunda:inputParameter>
+            <camunda:inputParameter name="payload">{
+  "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+  "firstName": "string",
+  "lastName": "string"
+}</camunda:inputParameter>
+          </camunda:inputOutput>
+          <camunda:connectorId>http-connector</camunda:connectorId>
+        </camunda:connector>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0q4kzn7</bpmn:incoming>
+      <bpmn:outgoing>Flow_0fz3wvc</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:sequenceFlow id="Flow_0fz3wvc" sourceRef="Activity_0sctxdc" targetRef="Activity_0fy2r6p" />
+    <bpmn:boundaryEvent id="Event_1mf52zs" attachedToRef="Activity_168dwyl">
+      <bpmn:outgoing>Flow_0rngzjs</bpmn:outgoing>
+      <bpmn:errorEventDefinition id="ErrorEventDefinition_0b1ef5m" errorRef="Error_1v05czg" camunda:errorCodeVariable="errorCode" camunda:errorMessageVariable="errorMessage" />
+    </bpmn:boundaryEvent>
+    <bpmn:scriptTask id="Activity_01v9g46" name="Test" scriptFormat="groovy">
+      <bpmn:incoming>Flow_0rngzjs</bpmn:incoming>
+      <bpmn:outgoing>Flow_032s6m5</bpmn:outgoing>
+      <bpmn:script>println "Error " + errorCode + ": " + errorMessage</bpmn:script>
+    </bpmn:scriptTask>
+    <bpmn:sequenceFlow id="Flow_0rngzjs" sourceRef="Event_1mf52zs" targetRef="Activity_01v9g46" />
+    <bpmn:endEvent id="Event_0mwx11o">
+      <bpmn:incoming>Flow_032s6m5</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_032s6m5" sourceRef="Activity_01v9g46" targetRef="Event_0mwx11o" />
+  </bpmn:process>
+  <bpmn:error id="Error_1v05czg" name="http-error" errorCode="http-error" camunda:errorMessage="Http Server Error" />
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_036hfnh">
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
+        <dc:Bounds x="112" y="99" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0zbb4c4_di" bpmnElement="Event_0zbb4c4">
+        <dc:Bounds x="822" y="99" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0g334ur_di" bpmnElement="Activity_0uq0gfr">
+        <dc:Bounds x="340" y="77" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_19jbt1l_di" bpmnElement="Activity_01cklmv">
+        <dc:Bounds x="500" y="77" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0c3xn1t_di" bpmnElement="Activity_168dwyl">
+        <dc:Bounds x="340" y="200" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_00t8mst_di" bpmnElement="Activity_0fy2r6p">
+        <dc:Bounds x="650" y="77" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_0m7a5h4" bpmnElement="Activity_0sctxdc">
+        <dc:Bounds x="520" y="200" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_0k02yvt" bpmnElement="Activity_01v9g46">
+        <dc:Bounds x="480" y="380" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_1kbcnoa" bpmnElement="Event_0mwx11o">
+        <dc:Bounds x="662" y="402" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1pxl6hy_di" bpmnElement="Event_1mf52zs">
+        <dc:Bounds x="382" y="262" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_0lk8rn1_di" bpmnElement="Flow_0lk8rn1">
+        <di:waypoint x="440" y="117" />
+        <di:waypoint x="500" y="117" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0ecsqzy_di" bpmnElement="Flow_0ecsqzy">
+        <di:waypoint x="600" y="117" />
+        <di:waypoint x="650" y="117" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0eikehk_di" bpmnElement="Flow_0eikehk">
+        <di:waypoint x="750" y="117" />
+        <di:waypoint x="822" y="117" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_08p168i_di" bpmnElement="Flow_08p168i">
+        <di:waypoint x="148" y="117" />
+        <di:waypoint x="244" y="117" />
+        <di:waypoint x="244" y="240" />
+        <di:waypoint x="340" y="240" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0q4kzn7_di" bpmnElement="Flow_0q4kzn7">
+        <di:waypoint x="440" y="240" />
+        <di:waypoint x="520" y="240" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0fz3wvc_di" bpmnElement="Flow_0fz3wvc">
+        <di:waypoint x="620" y="240" />
+        <di:waypoint x="700" y="240" />
+        <di:waypoint x="700" y="157" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0rngzjs_di" bpmnElement="Flow_0rngzjs">
+        <di:waypoint x="400" y="298" />
+        <di:waypoint x="400" y="420" />
+        <di:waypoint x="480" y="420" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_032s6m5_di" bpmnElement="Flow_032s6m5">
+        <di:waypoint x="580" y="420" />
+        <di:waypoint x="662" y="420" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>
